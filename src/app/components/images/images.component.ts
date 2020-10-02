@@ -14,9 +14,8 @@ export class ImagesComponent implements OnInit {
   retrievedImage: any;
   base64Data: any;
   retrieveResonse: any;
-  message1: any;
 
-  constructor(private imageService: ImageService) {
+  constructor(public imageService: ImageService) {
   }
 
   ngOnInit() {
@@ -36,15 +35,15 @@ export class ImagesComponent implements OnInit {
     uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     this.imageService.onUpload(uploadImageData).subscribe(
       response => {
-        this.message="Image uploaded ......"
+        this.message = "Image uploaded ......"
         console.log(this.message)
       },
       error => {
-        this.message=" Image not uploaded successfully : "
+        this.message = " Image not uploaded successfully : "
         console.log(this.message)
       },
       () => {
-        this.message=" Image uploaded successfully.........."
+        this.message = " Image uploaded successfully.........."
         console.log(this.message)
       }
     );
@@ -52,24 +51,29 @@ export class ImagesComponent implements OnInit {
   }
 
   //Gets called when the user clicks on retieve image button to get the image from back end
-  getImage() {
-    this.imageService.getImage(this.imageName).subscribe(
+  getImageInBD() {
+    this.imageService.getImageInBD(this.imageName).subscribe(
       response => {
         this.retrieveResonse = response;
-        console.log("retrieveResonse: "+this.retrieveResonse);
+        //console.log("retrieveResonse: "+this.retrieveResonse);
         this.base64Data = this.retrieveResonse.picByte;
-        console.log("base64Data: "+this.base64Data);
+        //console.log("base64Data: "+this.base64Data);
         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        console.log("retrievedImage: "+this.retrievedImage);
+        //console.log("retrievedImage: "+this.retrievedImage);
       },
       error => {
-        this.message=" Error Operation!!!! "
+        this.message = " Error Operation!!!! "
         console.log(error.toString());
       },
       () => {
-        this.message=" Succeful Operation!!!! "
+        this.message = " Succeful Operation!!!! "
       }
     );
 
+  }
+
+  getImageInDirectory() {
+    this.retrievedImage = this.imageService.getImageInDirectory(this.imageName)
+    //this.imageService.getImageInDirectory(this.imageName)
   }
 }

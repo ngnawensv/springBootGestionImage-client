@@ -16,8 +16,13 @@ export class ImageService {
 
   }
 
-  getImage(imageName) {
+  getImageInBD(imageName) {
     return this.httpClient.get(this.host+"/image/get/" + imageName);
+
+  }
+
+  getImageInDirectory(imageName) {
+    return this.host+"/image/get1/" + imageName; //image path return
 
   }
 }
